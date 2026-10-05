@@ -1,7 +1,7 @@
-import { Router } from "express";
-import Message from "../models/message.js";
+const express = require("express");
+const Message = require("../models/message");
 
-const router = Router();
+const router = express.Router();
 
 // send a message to a specific group
 router.patch("/:groupId/messages", async (req, res) => {
@@ -35,5 +35,4 @@ router.get("/:groupId/messages", async (req, res) => {
 });
 
 
-export default router;
-
+module.exports = router;

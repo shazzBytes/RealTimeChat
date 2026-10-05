@@ -1,23 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { OAuth2Client } = require('google-auth-library');
+const User = require('../models/user');
 
 const router = express.Router();
 
-const userSchema = new mongoose.Schema(
-	{
-		name: { type: String, required: true, trim: true },
-		email: { type: String, required: true, unique: true, lowercase: true, trim: true },
-		password: { type: String, required: true, minlength: 6 },
-		googleId: { type: String, unique: true, sparse: true },
-	},
-	{ timestamps: true }
-);
-
-const User = mongoose.models.User || mongoose.model('User', userSchema);
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const createToken = (user) =>
