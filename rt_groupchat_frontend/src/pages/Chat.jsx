@@ -11,7 +11,7 @@ function Avatar({ name, color }) {
 	return <span className="chat-avatar" style={{ backgroundColor: color }}>{name.split(' ').map((word) => word[0]).join('')}</span>;
 }
 
-export default function Chat() {
+export default function Chat({ onLogout }) {
 	const [room, setRoom] = useState(() => JSON.parse(localStorage.getItem(ROOM_KEY) || 'null'));
 	const [user] = useState(() => JSON.parse(localStorage.getItem(USER_KEY) || 'null'));
 	const [messages, setMessages] = useState([]);
@@ -104,6 +104,17 @@ export default function Chat() {
 		}
 	};
 
+	const handleLogout = async () => {
+		try {
+			socketRef.current?.disconnect();
+			await onLogout?.();
+			localStorage.removeItem(ROOM_KEY);
+			window.location.hash = '#login';
+		} catch (logoutError) {
+			setError(logoutError instanceof Error ? logoutError.message : 'Unable to sign out.');
+		}
+	};
+
 	useEffect(() => {
 		if (!room?._id || !user?.id) return;
 		fetch(`${API_URL}/groups/rooms/${room._id}?userId=${encodeURIComponent(user.id)}`, {
@@ -179,6 +190,7 @@ export default function Chat() {
 								<div className="chat-menu">
 									<button type="button" onClick={() => { setIsMenuOpen(false); window.location.hash = '#groups'; }}>Back to groups</button>
 									{isOwner && <button className="chat-menu-delete" type="button" onClick={deleteChat} disabled={isDeleting}>Delete group</button>}
+									<button className="chat-menu-logout" type="button" onClick={handleLogout}>Log out</button>
 								</div>
 							)}
 						</div>

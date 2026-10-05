@@ -1,16 +1,14 @@
 import { useState } from "react";
 
 import "./Auth.css";
-import GoogleButton from "../components/GoogleButton";
 
 const initialForm = { email: "", password: "" };
 
-export default function Login({ onSubmit, onGoogleSubmit }) {
+export default function Login({ onSubmit }) {
 	const [form, setForm] = useState(initialForm);
 	const [showPassword, setShowPassword] = useState(false);
 	const [error, setError] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [isGoogleSubmitting, setIsGoogleSubmitting] = useState(false);
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -23,18 +21,6 @@ export default function Login({ onSubmit, onGoogleSubmit }) {
 			setError(submitError instanceof Error ? submitError.message : "Unable to sign in.");
 		} finally {
 			setIsSubmitting(false);
-		}
-	};
-
-	const handleGoogleSubmit = async (credential) => {
-		setError("");
-		setIsGoogleSubmitting(true);
-		try {
-			await onGoogleSubmit?.(credential);
-		} catch (submitError) {
-			setError(submitError instanceof Error ? submitError.message : "Unable to continue with Google.");
-		} finally {
-			setIsGoogleSubmitting(false);
 		}
 	};
 
@@ -57,8 +43,6 @@ export default function Login({ onSubmit, onGoogleSubmit }) {
 					<div className="options"><span /><a href="#forgot">Forgot password?</a></div>
 					{error && <p role="alert" className="auth-error">{error}</p>}
 					<button className="sign-in" type="submit" disabled={isSubmitting}>{isSubmitting ? "Signing in..." : "Sign in"}</button>
-					<div className="divider">or continue with</div>
-					<GoogleButton onCredential={handleGoogleSubmit} disabled={isSubmitting || isGoogleSubmitting} />
 					<p className="signup">Don't have an account? <a href="#signup">Create one</a></p>
 				</form>
 			</section>

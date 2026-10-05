@@ -89,21 +89,6 @@ export function useAuth({
 		}
 	}, [signupPath]);
 
-	const googleLogin = useCallback(async (credential) => {
-		setIsLoading(true);
-		setError(null);
-		try {
-			const data = await requestAuth("/auth/google", { credential }, "Unable to authenticate with Google.");
-			saveSession(data);
-			return data;
-		} catch (requestError) {
-			setError(requestError);
-			throw requestError;
-		} finally {
-			setIsLoading(false);
-		}
-	}, []);
-
 	const logout = useCallback(async () => {
 		setIsLoading(true);
 		setError(null);
@@ -128,5 +113,5 @@ export function useAuth({
 		}
 	}, [logoutPath, token]);
 
-	return { token, user, isAuthenticated: Boolean(token), isLoading, error, login, signup, googleLogin, logout };
+	return { token, user, isAuthenticated: Boolean(token), isLoading, error, login, signup, logout };
 }

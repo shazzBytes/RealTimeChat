@@ -8,7 +8,7 @@ import { useAuth } from "./hooks/useAuth";
 
 export default function App() {
 	const [page, setPage] = useState(window.location.hash.startsWith("#chat/") ? "chat" : window.location.hash === "#signup" ? "signup" : "login");
-	const { isAuthenticated, login, signup, googleLogin } = useAuth();
+	const { isAuthenticated, login, signup, logout } = useAuth();
 
 	useEffect(() => {
 		const handleHashChange = () => setPage(window.location.hash.startsWith("#chat/") ? "chat" : window.location.hash === "#signup" ? "signup" : "login");
@@ -17,10 +17,12 @@ export default function App() {
 	}, []);
 
 	if (isAuthenticated) {
-		return page === "chat" ? <Chat /> : <Groups />;
+		return page === "chat"
+			? <Chat onLogout={logout} />
+			: <Groups onLogout={logout} />;
 	}
 
 	return page === "signup"
-		? <Signup onSubmit={signup} onGoogleSubmit={googleLogin} />
-		: <Login onSubmit={login} onGoogleSubmit={googleLogin} />;
+		? <Signup onSubmit={signup} />
+		: <Login onSubmit={login} />;
 }

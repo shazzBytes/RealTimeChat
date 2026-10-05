@@ -7,7 +7,26 @@
 }
 
 .groups-header {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 20px;
 	margin-bottom: 28px;
+}
+
+.logout-button {
+	border: 1px solid #d0d5dd;
+	border-radius: 8px;
+	padding: 9px 13px;
+	color: #344054;
+	background: white;
+	cursor: pointer;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.logout-button:hover {
+	background: #f9fafb;
 }
 
 .groups-eyebrow {
@@ -246,6 +265,11 @@
 
 	.groups-title {
 		font-size: 30px;
+	}
+
+	.groups-header {
+		align-items: flex-start;
+		flex-direction: column;
 	}
 
 	.group-card {

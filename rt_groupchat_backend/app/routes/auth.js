@@ -1,13 +1,9 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
-const { OAuth2Client } = require('google-auth-library');
 const User = require('../models/user');
 
 const router = express.Router();
-
-const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const createToken = (user) =>
 	jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET || 'change-me', {
@@ -60,46 +56,8 @@ router.post('/signin', async (req, res) => {
 	}
 });
 
-router.post('/google', async (req, res) => {
-	try {
-		const credential = req.body.credential || req.body.idToken;
-		if (!credential || !process.env.GOOGLE_CLIENT_ID) {
-			return res.status(400).json({ message: 'A Google credential is required' });
-		}
-
-		const ticket = await googleClient.verifyIdToken({
-			idToken: credential,
-			audience: process.env.GOOGLE_CLIENT_ID,
-		});
-		const payload = ticket.getPayload();
-		if (!payload?.sub || !payload.email || payload.email_verified !== true) {
-			return res.status(401).json({ message: 'Invalid Google account' });
-		}
-
-		const email = payload.email.toLowerCase().trim();
-		let user = await User.findOne({ $or: [{ googleId: payload.sub }, { email }] });
-
-		if (user) {
-			if (!user.googleId) {
-				user.googleId = payload.sub;
-				await user.save();
-			}
-		} else {
-			user = await User.create({
-				name: payload.name || email.split('@')[0],
-				email,
-				googleId: payload.sub,
-				password: await bcrypt.hash(crypto.randomBytes(32).toString('hex'), 12),
-			});
-		}
-
-		return res.json({
-			user: { id: user._id, name: user.name, email: user.email },
-			token: createToken(user),
-		});
-	} catch (error) {
-		return res.status(401).json({ message: 'Unable to authenticate with Google' });
-	}
+router.post('/logout', (_req, res) => {
+	res.json({ message: 'Signed out successfully' });
 });
 
 module.exports = router;

@@ -4,7 +4,7 @@ const API_URL = import.meta.env.VITE_API_URL ?? "";
 const TOKEN_KEY = "rt_groupchat_token";
 const USER_KEY = "rt_groupchat_user";
 
-export default function Groups() {
+export default function Groups({ onLogout }) {
 	const [groups, setGroups] = useState([]);
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
@@ -103,6 +103,16 @@ export default function Groups() {
 		}
 	};
 
+	const handleLogout = async () => {
+		try {
+			await onLogout?.();
+			localStorage.removeItem("rt_groupchat_room");
+			window.location.hash = "#login";
+		} catch (logoutError) {
+			setError(logoutError instanceof Error ? logoutError.message : "Unable to sign out.");
+		}
+	};
+
 	return (
 		<main className="groups-page">
 			<header className="groups-header">
@@ -111,6 +121,7 @@ export default function Groups() {
 					<h1 className="groups-title">Group chats</h1>
 					<p className="groups-subtitle">Create a room or join one with a room code.</p>
 				</div>
+				<button className="logout-button" type="button" onClick={handleLogout}>Log out</button>
 			</header>
 
 			<div className="groups-actions">
