@@ -35,6 +35,8 @@ a { color: #5b52d8; font-weight: 700; text-decoration: none; }
 .google { width: 100%; padding: 12px; border: 1px solid #dce1eb; border-radius: 9px; color: #394258; background: white; cursor: pointer; font-weight: 600; }
 .google b { margin-right: 8px; color: #4285f4; font-size: 17px; }
 .google:disabled { cursor: not-allowed; opacity: .65; }
+.google-button { display: flex; justify-content: center; min-height: 40px; }
+.google-unavailable { margin: 0; color: #7b8498; font-size: 12px; text-align: center; }
 .signup { margin: 27px 0 0; color: #7b8498; text-align: center; font-size: 13px; }
 .auth-error { margin: -4px 0 18px; color: #c0394b; font-size: 13px; }
 .sign-in:disabled { cursor: not-allowed; opacity: .7; }

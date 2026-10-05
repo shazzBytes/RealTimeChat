@@ -11,6 +11,12 @@ const groupSchema = new mongoose.Schema(
 			type: String,
 			trim: true,
 		},
+		roomCode: {
+			type: String,
+			required: true,
+			unique: true,
+			index: true,
+		},
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
