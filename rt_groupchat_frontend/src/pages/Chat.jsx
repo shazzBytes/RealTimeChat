@@ -185,12 +185,12 @@ export default function Chat({ onLogout }) {
 					<header className="chat-header">
 						<div><h2>{room?.name || 'Chat room'}</h2><p><i className="online-dot" /> Room code: {room?.roomCode || '—'}</p></div>
 						<div className="chat-header-actions">
-							<button className="more-button" type="button" aria-label="Chat options" aria-expanded={isMenuOpen} onClick={() => setIsMenuOpen((open) => !open)}>•••</button>
+							<button className="more-button" type="button" aria-label="Chat options" aria-expanded={isMenuOpen} onClick={() => setIsMenuOpen((open) => !open)}><span className="material-symbols-rounded" aria-hidden="true">more_vert</span></button>
 							{isMenuOpen && (
 								<div className="chat-menu">
-									<button type="button" onClick={() => { setIsMenuOpen(false); window.location.hash = '#groups'; }}>Back to groups</button>
-									{isOwner && <button className="chat-menu-delete" type="button" onClick={deleteChat} disabled={isDeleting}>Delete group</button>}
-									<button className="chat-menu-logout" type="button" onClick={handleLogout}>Log out</button>
+									<button type="button" onClick={() => { setIsMenuOpen(false); window.location.hash = '#groups'; }}><span className="material-symbols-rounded" aria-hidden="true">arrow_back</span> Back to groups</button>
+									{isOwner && <button className="chat-menu-delete" type="button" onClick={deleteChat} disabled={isDeleting}><span className="material-symbols-rounded" aria-hidden="true">delete</span> Delete group</button>}
+									<button className="chat-menu-logout" type="button" onClick={handleLogout}><span className="material-symbols-rounded" aria-hidden="true">logout</span> Log out</button>
 								</div>
 							)}
 						</div>
@@ -213,7 +213,7 @@ export default function Chat({ onLogout }) {
 						{typingLabel && <p className="typing-indicator" aria-live="polite">{typingLabel}</p>}
 					</div>
 					<form className="message-form" onSubmit={handleSubmit}>
-						<button className="attach-button" type="button" aria-label="Attach file">＋</button>
+						<button className="attach-button" type="button" aria-label="Attach file"><span className="material-symbols-rounded" aria-hidden="true">attach_file</span></button>
 						<input
 							value={draft}
 							onChange={(event) => {
@@ -223,7 +223,7 @@ export default function Chat({ onLogout }) {
 							placeholder="Write a message..."
 							aria-label="Message"
 						/>
-						<button className="send-button" type="submit" disabled={isSending}>Send</button>
+						<button className="send-button" type="submit" disabled={isSending}><span className="material-symbols-rounded" aria-hidden="true">send</span><span className="send-label">Send</span></button>
 					</form>
 				</div>
 			</section>

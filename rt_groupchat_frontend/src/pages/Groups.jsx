@@ -121,7 +121,7 @@ export default function Groups({ onLogout }) {
 					<h1 className="groups-title">Group chats</h1>
 					<p className="groups-subtitle">Create a room or join one with a room code.</p>
 				</div>
-				<button className="logout-button" type="button" onClick={handleLogout}>Log out</button>
+				<button className="logout-button" type="button" onClick={handleLogout}><span className="material-symbols-rounded" aria-hidden="true">logout</span> Log out</button>
 			</header>
 
 			<div className="groups-actions">
@@ -142,7 +142,7 @@ export default function Groups({ onLogout }) {
 				<div className="room-status room-status--success room-code-status">
 					<span>Room created. Share this code: <strong>{roomCode}</strong></span>
 					<button className="copy-code-button" type="button" onClick={copyRoomCode}>
-						{isCodeCopied ? "Copied" : "Copy code"}
+						<span className="material-symbols-rounded" aria-hidden="true">{isCodeCopied ? "check" : "content_copy"}</span> {isCodeCopied ? "Copied" : "Copy code"}
 					</button>
 				</div>
 			)}
@@ -166,7 +166,7 @@ export default function Groups({ onLogout }) {
 									window.location.hash = `#chat/${group._id}`;
 								}}
 							>
-								Open chat <span aria-hidden="true">→</span>
+								Open chat <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
 							</button>
 							{String(group.owner) === String(userId) && (
 								<div className="group-menu">
@@ -177,7 +177,7 @@ export default function Groups({ onLogout }) {
 										aria-expanded={openMenuId === group._id}
 										onClick={() => setOpenMenuId((current) => current === group._id ? null : group._id)}
 									>
-										•••
+										<span className="material-symbols-rounded" aria-hidden="true">more_vert</span>
 									</button>
 									{openMenuId === group._id && (
 										<div className="group-menu-dropdown">
@@ -190,7 +190,7 @@ export default function Groups({ onLogout }) {
 												}}
 												disabled={isSubmitting}
 											>
-												Delete group
+												<span className="material-symbols-rounded" aria-hidden="true">delete</span> Delete group
 											</button>
 										</div>
 									)}

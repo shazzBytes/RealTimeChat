@@ -39,7 +39,7 @@ export default function Login({ onSubmit }) {
 					<h2>Welcome back</h2>
 					<p className="subtitle">Sign in to continue to your conversations.</p>
 					<label className="field">Email address<input name="email" type="email" value={form.email} onChange={({ target }) => setForm({ ...form, email: target.value })} placeholder="you@example.com" autoComplete="email" required /></label>
-					<label className="field">Password<div className="password"><input name="password" type={showPassword ? "text" : "password"} value={form.password} onChange={({ target }) => setForm({ ...form, password: target.value })} placeholder="Enter your password" autoComplete="current-password" required /><button className="show-password" type="button" onClick={() => setShowPassword((value) => !value)}>{showPassword ? "Hide" : "Show"}</button></div></label>
+					<label className="field">Password<div className="password"><input name="password" type={showPassword ? "text" : "password"} value={form.password} onChange={({ target }) => setForm({ ...form, password: target.value })} placeholder="Enter your password" autoComplete="current-password" required /><button className="show-password" type="button" aria-label={showPassword ? "Hide password" : "Show password"} onClick={() => setShowPassword((value) => !value)}><span className="material-symbols-rounded" aria-hidden="true">{showPassword ? "visibility_off" : "visibility"}</span></button></div></label>
 					<div className="options"><span /><a href="#forgot">Forgot password?</a></div>
 					{error && <p role="alert" className="auth-error">{error}</p>}
 					<button className="sign-in" type="submit" disabled={isSubmitting}>{isSubmitting ? "Signing in..." : "Sign in"}</button>

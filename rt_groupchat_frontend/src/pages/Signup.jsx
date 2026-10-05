@@ -73,14 +73,14 @@ export default function Signup({ onSubmit }) {
 						Password
 						<div className="password">
 							<input name="password" type={showPassword ? "text" : "password"} value={form.password} onChange={handleChange} placeholder="Create a password" autoComplete="new-password" minLength="8" required />
-							<button className="show-password" type="button" onClick={() => setShowPassword((value) => !value)}>{showPassword ? "Hide" : "Show"}</button>
+							<button className="show-password" type="button" aria-label={showPassword ? "Hide password" : "Show password"} onClick={() => setShowPassword((value) => !value)}><span className="material-symbols-rounded" aria-hidden="true">{showPassword ? "visibility_off" : "visibility"}</span></button>
 						</div>
 					</label>
 					<label className="field">
 						Confirm password
 						<div className="password">
 							<input name="confirmPassword" type={showConfirmPassword ? "text" : "password"} value={form.confirmPassword} onChange={handleChange} placeholder="Repeat your password" autoComplete="new-password" minLength="8" required />
-							<button className="show-password" type="button" onClick={() => setShowConfirmPassword((value) => !value)}>{showConfirmPassword ? "Hide" : "Show"}</button>
+							<button className="show-password" type="button" aria-label={showConfirmPassword ? "Hide password confirmation" : "Show password confirmation"} onClick={() => setShowConfirmPassword((value) => !value)}><span className="material-symbols-rounded" aria-hidden="true">{showConfirmPassword ? "visibility_off" : "visibility"}</span></button>
 						</div>
 					</label>
 
